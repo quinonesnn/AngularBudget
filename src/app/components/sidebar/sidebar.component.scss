@@ -1,0 +1,55 @@
+h1 {
+    padding: 0 1rem;
+}
+
+
+mat-toolbar {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+
+mat-sidenav-container {
+    height: 100%;
+}
+
+
+// Move the content down so that it won't be hidden by the toolbar
+mat-sidenav {
+    padding-top: 3.5rem;
+    width: 200px;
+
+    @media screen and (min-width: 600px) {
+        padding-top: 4rem;
+    }
+
+
+    .sidenav-header {
+        padding-top: 24px;
+        text-align: center;
+
+        img {
+            border-radius: 100%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        img:hover {
+            transform: scale(1.2)
+        }
+    }
+
+    .collapsed {
+        width: 60px;
+        transition: width 0.3s ease-in-out;
+    }
+}
+
+// Move the content down so that it won't be hidden by the toolbar
+mat-sidenav-content {
+    padding-top: 3.5rem;
+
+    @media screen and (min-width: 600px) {
+        padding-top: calc(4rem + 60px);
+    }
+}
