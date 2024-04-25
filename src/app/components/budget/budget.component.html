@@ -1,1 +1,79 @@
-<p>budget works!</p>
+<div>
+    <div class="header">
+        <h1 mat-title>Budget-  </h1>
+
+    </div>
+    <div class="budget-main">
+        <mat-accordion class="group" cdkDropList (cdkDropListDropped)="dropGroup($event)" multi>
+            <mat-expansion-panel
+            cdkDrag
+            *ngFor="let group of budgetGroups; let groupIdx = index" 
+            (opened)="group.expanded = true" 
+            (closed)="group.expanded = false">
+                <mat-expansion-panel-header class="panel-header">
+                    <button mat-icon-button *ngIf="group.expanded" (click)="removeGroup(groupIdx)">
+                        <mat-icon>remove_circle</mat-icon>
+                    </button>
+                    <mat-card-title>
+                        <input type="text" id="groupNameID" value="{{group.name}}">
+                    </mat-card-title>
+                    <mat-panel-description>Planned</mat-panel-description>
+                    <mat-panel-description>Spent</mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card class="items">
+                    <mat-table 
+                        [dataSource]="group.items"
+                        *ngIf="group.expanded && group.items.length > 0"
+                        class="mat-elevation-z3">
+                        <ng-container matColumnDef="delete">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let itemIdx = index">
+                                <button mat-icon-button (click)="removeItem(groupIdx, itemIdx)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Name</th>
+                            <td mat-cell *matCellDef="let item">
+                                <input type="text" id="itemNameID" value="{{item.name}}">
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="planned">
+                            <th mat-header-cell *matHeaderCellDef>Planned</th>
+                            <td mat-cell *matCellDef="let item">
+                                <input type="number" id="plannedAmountID" step="0.01"  min="0">
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="spent">
+                            <th mat-header-cell *matHeaderCellDef>Spent</th>
+                            <td mat-cell *matCellDef="let item"> {{item.spentAmount}}</td>
+                        </ng-container>
+                        <tr mat-header-cell *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </mat-table>
+                    <button mat-raised-button (click)="addItem(groupIdx)">
+                        Add Item +
+                    </button>
+                </mat-card>
+            </mat-expansion-panel>
+            <mat-card>
+                <button mat-raised-button (click)="addGroup()">
+                    Add Group +
+                </button>
+            </mat-card>
+        </mat-accordion>
+        <div class="sidebar">
+            <h1>Transactions</h1>
+            <!-- <mat-list>
+                <mat-list-item *ngFor="let transaction of transactions">
+                    {{ transaction.name }} - {{ transaction.account }} (${{ transaction.amount }})
+                </mat-list-item>
+            </mat-list> -->
+        </div>
+    </div>
+</div>
+
+
+
+
